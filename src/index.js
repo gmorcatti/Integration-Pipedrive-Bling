@@ -6,6 +6,7 @@ import 'express-async-errors';
 import router from './Router/index.js'
 import errorHandler from "./Errors/ErrorHandler.js";
 
+// Start Jobs
 import './modules/Deals/Jobs/getDealsFromPipeDriveAndSendToBling.js'
 import './modules/Deals/Jobs/saveDailyValueAggregateOfDeals.js'
 

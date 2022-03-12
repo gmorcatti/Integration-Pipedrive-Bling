@@ -1,9 +1,14 @@
 import axios from "axios";
 
+const {
+    PIPEDRIVE_API_KEY,
+    PIPEDRIVE_URL
+} = process.env;
+
 const pipeDriveInstance = axios.create({
-    baseURL: 'https://api.pipedrive.com/v1',
+    baseURL: PIPEDRIVE_URL,
     params: {
-        api_token: process.env.PIPEDRIVE_API_KEY
+        api_token: PIPEDRIVE_API_KEY
     }
 })
 
