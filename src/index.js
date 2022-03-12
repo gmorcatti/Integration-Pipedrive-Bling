@@ -7,6 +7,7 @@ import router from './Router/index.js'
 import errorHandler from "./Errors/ErrorHandler.js";
 
 import './modules/Deals/Jobs/getDealsFromPipeDriveAndSendToBling.js'
+import './modules/Deals/Jobs/saveDailyValueAggregateOfDeals.js'
 
 const app = express();
 const PORT = 3000;

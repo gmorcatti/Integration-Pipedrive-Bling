@@ -1,12 +1,14 @@
 import { Router } from 'express'
 
-import DealsController from '../modules/Deals/Controller/index.js'
+import RoutesController from '../modules/Deals/Controller/routesController.js'
 
 const router = Router();
-const dealsController = new DealsController();
+const routesController = new RoutesController();
 
-router.get('/deals', dealsController.getAllPipeDriveDeals)
-router.post('/salesOrder', dealsController.createBlingSalesOrder)
-router.post('/test', dealsController.saveDailyValueAggregateOfDeals)
+router.get('/dailyAggregate', routesController.getAllCollection)
+
+router.get('/deals', routesController.getAllPipeDriveDeals)
+router.post('/salesOrder', routesController.createBlingSalesOrder)
+router.post('/test', routesController.saveDailyValueAggregateOfDeals)
 
 export default router;

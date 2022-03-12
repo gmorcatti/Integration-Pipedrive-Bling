@@ -1,23 +1,47 @@
 import PipeDriveRepository from "../Repositories/PipeDrive/index.js";
 import BlingRepository from "../Repositories/Bling/index.js";
+import MongoRepository from "../Repositories/Mongo/index.js";
 
 import GetAllWonDealsThatWasNotIntegrated from '../Services/getWonDealsAndCreateSalesOrder.js'
 import SaveDailyValueAggregateOfDeals from '../Services/SaveDailyValueAggregateOfDeals.js'
+import GetAllMongoCollection from '../Services/getAllMongoCollection.js'
 
 const pipeDriveRepository = new PipeDriveRepository();
 const blingRepository = new BlingRepository();
+const mongoRepository = new MongoRepository();
 
 const getAllWonDealsThatWasNotIntegrated = new GetAllWonDealsThatWasNotIntegrated({
     pipeDriveRepository,
-    blingRepository
+    blingRepository,
 });
 
 const saveDailyValueAggregateOfDeals = new SaveDailyValueAggregateOfDeals({
-    pipeDriveRepository,
-    blingRepository
+    blingRepository,
+    mongoRepository,
 });
 
-class DealsController {
+const getAllMongoCollection = new GetAllMongoCollection({
+    mongoRepository,
+});
+
+class RoutesController {
+
+    async getAllCollection(req, res) {
+        try {
+            const data = await getAllMongoCollection.handle();
+            return res.send(data)
+        } catch (error) {
+            const errorObj = {
+                message: 'Internal Server Error',
+                details: error.message,
+                stack: error.stack,
+                timestamp: new Date().getTime(),
+            }
+            console.error(errorObj)
+            return res.status(500).send(errorObj)
+        }
+    }
+
     async getAllPipeDriveDeals(req, res) {
         const allDeals = await pipeDriveRepository.getAllWonDealsThatWasNotIntegrated()
         res.send(allDeals)
@@ -40,8 +64,8 @@ class DealsController {
 
     async saveDailyValueAggregateOfDeals(req, res) {
         try {
-            const deals = await saveDailyValueAggregateOfDeals.handle();
-            res.status(200).send({ length: deals.retorno.pedidos.length})
+            const data = await saveDailyValueAggregateOfDeals.handle();
+            res.status(200).send(data)
         } catch(err) {
             console.log(err.isAxiosError)
             res.status(400).send(err?.response?.data || err.message)
@@ -49,4 +73,4 @@ class DealsController {
     }
 }
 
-export default DealsController
+export default RoutesController

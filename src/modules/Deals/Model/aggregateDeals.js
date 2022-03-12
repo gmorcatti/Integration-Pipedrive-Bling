@@ -1,9 +1,18 @@
-import { Schema, model } from '../../../database/index.js';
+import mongoose from '../../../database/index.js';
+
+const {
+    Schema,
+    model
+} = mongoose;
 
 const AggregateDealsSchema = new Schema({
-    date: {
+    createdAt: {
         type: Date,
         default: Date.now
+    },
+    date: {
+        type: String,
+        required: [true, 'The date is required']
     },
     dailyValueInReais: {
         type: Number,

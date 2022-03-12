@@ -36,7 +36,7 @@ class BlingRepository {
             params,
         })
 
-        return salesOrderByDayRequest.data
+        return salesOrderByDayRequest.data.retorno
     }
 }
 
